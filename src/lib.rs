@@ -26,7 +26,7 @@
     rustdoc::missing_crate_level_docs
 )]
 #![no_std]
-#![cfg_attr(all(docsrs, not(doctest)), feature(doc_cfg, doc_auto_cfg))]
+#![cfg_attr(all(docsrs, not(doctest)), feature(doc_cfg))]
 
 #[cfg(feature = "alloc")]
 extern crate alloc;
