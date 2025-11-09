@@ -50,7 +50,7 @@ impl error::Error for BoxedError {
     }
 }
 impl Deref for BoxedError {
-    type Target = dyn error::Error;
+    type Target = dyn error::Error + Send + Sync + 'static;
     fn deref(&self) -> &Self::Target {
         self
     }

@@ -102,7 +102,9 @@ pub trait Trace: Sized + Send + Sync + 'static {
 ///     Ok(a / b)
 /// }
 /// ```
-pub trait Source: Trace + Deref<Target = dyn error::Error> {
+pub trait Source:
+    Trace + Deref<Target = dyn error::Error + Send + Sync + 'static>
+{
     /// Returns a new `Self` using the given [`Error`].
     ///
     /// Depending on the specific implementation, this may box the error,
@@ -649,7 +651,7 @@ impl Source for Panic {
     }
 }
 impl Deref for Panic {
-    type Target = dyn error::Error;
+    type Target = dyn error::Error + Send + Sync + 'static;
     fn deref(&self) -> &Self::Target {
         self
     }
@@ -683,7 +685,7 @@ impl Source for Failure {
     }
 }
 impl Deref for Failure {
-    type Target = dyn error::Error;
+    type Target = dyn error::Error + Send + Sync + 'static;
 
     fn deref(&self) -> &Self::Target {
         self
@@ -747,7 +749,7 @@ impl Source for Error {
     }
 }
 impl Deref for Error {
-    type Target = dyn error::Error;
+    type Target = dyn error::Error + Send + Sync + 'static;
 
     fn deref(&self) -> &Self::Target {
         self
