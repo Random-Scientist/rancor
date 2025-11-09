@@ -1,4 +1,4 @@
-use core::{error, fmt};
+use core::{error, fmt, ops::Deref};
 
 use crate::{thin_box::ThinBox, Source, Trace};
 
@@ -47,6 +47,12 @@ impl fmt::Display for BoxedError {
 impl error::Error for BoxedError {
     fn source(&self) -> Option<&(dyn error::Error + 'static)> {
         self.inner.source()
+    }
+}
+impl Deref for BoxedError {
+    type Target = dyn error::Error;
+    fn deref(&self) -> &Self::Target {
+        self
     }
 }
 
